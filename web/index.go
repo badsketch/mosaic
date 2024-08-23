@@ -2,8 +2,8 @@ package web
 
 import (
 	"embed"
+	"html/template"
 	"io"
-	"text/template"
 )
 
 type Post struct {
@@ -17,7 +17,7 @@ var (
 )
 
 func Render(w io.Writer, p Post) error {
-	templ, err := template.New("blog").ParseFS(postTemplates, "templates/*.gohtml")
+	templ, err := template.ParseFS(postTemplates, "templates/*.gohtml")
 	if err != nil {
 		return err
 	}
