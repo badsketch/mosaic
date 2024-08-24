@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/badsketch/mosaic/core"
+)
 
 func main() {
-    fmt.Println("Hello, World!")
+	core.ProduceBlackWhite("./static/input.png")
 }
