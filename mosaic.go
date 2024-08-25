@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	core.ProduceBlackWhite("./static/input.png")
+	// core.ProduceBlackWhite("./static/input.png")
+	core.Resize(("./static/input.png"))
 }
