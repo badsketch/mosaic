@@ -10,7 +10,7 @@ import (
 	otherdraw "golang.org/x/image/draw"
 )
 
-func ProduceBlackWhite(inputImg string) {
+func ConvertGrayscale(inputImg string) {
 	file, err := os.Open(inputImg)
 	if err != nil {
 		panic(err)
@@ -30,12 +30,18 @@ func ProduceBlackWhite(inputImg string) {
 			oldPixel := img.At(x, y)
 			r, g, b, _ := oldPixel.RGBA()
 			lum := 0.299*float64(r) + 0.587*float64(g) + 0.114*float64(b)
-			newPixel := color.Gray{uint8(lum / 256)}
+			// value := uint8(0)
+			// if uint8(lum/256) > (256 / 2) {
+			// 	value = uint8(255)
+			// }
+			// newPixel := color.Gray{uint8(lum / 256)}
+			// newPixel := color.Gray{uint8(lum/256 < 0x80)}
+			newPixel := color.Gray(uint8(lum/256) < 0x80)
 			newImg.Set(x, y, newPixel)
 		}
 	}
 
-	outputFile, err := os.Create("../dist/output.png")
+	outputFile, err := os.Create("./dist/bw_output.png")
 	if err != nil {
 		panic(err)
 	}
