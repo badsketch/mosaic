@@ -87,7 +87,7 @@ func ConvertGrayscale(inputImg string) {
 	}
 }
 
-func Resize(inputImg string) {
+func Resize(inputImg string, factor int) {
 	file, err := os.Open(inputImg)
 	if err != nil {
 		panic(err)
@@ -99,7 +99,35 @@ func Resize(inputImg string) {
 		panic(err)
 	}
 
-	newImg := image.NewRGBA(image.Rect(0, 0, img.Bounds().Max.X*2, img.Bounds().Max.Y*2))
+	newImg := image.NewRGBA(image.Rect(0, 0, img.Bounds().Max.X*factor, img.Bounds().Max.Y*factor))
+
+	otherdraw.NearestNeighbor.Scale(newImg, newImg.Rect, img, img.Bounds(), otherdraw.Over, nil)
+
+	outputFile, err := os.Create("./dist/scaled_output.png")
+	if err != nil {
+		panic(err)
+	}
+	defer outputFile.Close()
+
+	err = png.Encode(outputFile, newImg)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func ResizeAbsolute(inputImg string, length int, width int) {
+	file, err := os.Open(inputImg)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	img, _, err := image.Decode(file)
+	if err != nil {
+		panic(err)
+	}
+
+	newImg := image.NewRGBA(image.Rect(0, 0, length, width))
 
 	otherdraw.NearestNeighbor.Scale(newImg, newImg.Rect, img, img.Bounds(), otherdraw.Over, nil)
 
