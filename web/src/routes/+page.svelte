@@ -1,23 +1,23 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
-	export let data: PageData;
 </script>
 
 <main>
 	<h1>Mosaic</h1>
-	<div>Data from GO server: {data.data}</div>
-	<form>
+	<form method="POST" use:enhance enctype="multipart/form-data">
 		<label>
-			Source image
-			<input name="src" type="file" />
+			Source image 1
+			<input name="first" type="file" accept=".jpg, .jpeg, .png, .webp" required />
+		</label>
+		<label>
+			Source image 2
+			<input name="second" type="file" accept=".jpg, .jpeg, .png, .webp" required />
 		</label>
 		<label>
 			Target image
-			<input name="target" type="file" />
+			<input name="target" type="file" accept=".jpg, .jpeg, .png, .webp" required />
 		</label>
 
-		<button on:click={() => alert('hello')}>Generate my image!</button>
+		<button>Generate my image!</button>
 	</form>
 </main>
 
